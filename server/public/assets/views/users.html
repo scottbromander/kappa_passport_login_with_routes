@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Users</title>
+
+    <script type="text/javascript" src="/assets/vendors/jquery.min.js"></script>
+  </head>
+  <body>
+      Logged in!
+
+      <p id="welcome">
+        Hello
+      </p>
+
+      <script>
+          $(document).ready(function(){
+              $.ajax({
+                  type: "GET",
+                  url: "/user/name",
+                  success: function(response){
+                    console.log(response);
+
+                    $("#welcome").text("Hello " + response.firstname);
+                  }
+              })
+          });
+      </script>
+  </body>
+</html>
