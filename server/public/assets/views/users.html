@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp">
   <head>
     <meta charset="utf-8">
     <title>Users</title>
 
-    <script type="text/javascript" src="/assets/vendors/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/vendors/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/assets/vendors/angular-route/angular-route.min.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/client.js"></script>
   </head>
   <body>
       Logged in!
@@ -13,18 +16,11 @@
         Hello
       </p>
 
-      <script>
-          $(document).ready(function(){
-              $.ajax({
-                  type: "GET",
-                  url: "/user/name",
-                  success: function(response){
-                    console.log(response);
+      <ul>
+        <li><a href="#user">USER</a></li>
+        <li><a href="#another">ANOTHER</a></li>
+      </ul>
 
-                    $("#welcome").text("Hello " + response.firstname);
-                  }
-              })
-          });
-      </script>
+      <main ng-view></main>
   </body>
 </html>
