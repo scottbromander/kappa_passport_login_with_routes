@@ -4,10 +4,16 @@ var User = require("../models/user");
 
 router.get("/", function(req,res,next){
     res.json(req.isAuthenticated());
+
 });
 
 router.get("/name", function(req,res,next){
     console.log("Hi class! ", req.isAuthenticated());
+
+    if(req.isAuthenticated() === false){
+      res.send(undefined);
+    }
+
     var resUser = {
         username: req.user.username,
         firstname: req.user.firstname,

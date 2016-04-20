@@ -18,22 +18,44 @@ myApp.config(["$routeProvider", function($routeProvider){
         });
 }]);
 
-myApp.controller("SomeController", ["$scope", "$http", "$location", function($scope, $http, $location){
+myApp.controller("SomeController", ["$scope", "UserService", function($scope, UserService){
     console.log("SomeController");
-    $http.get("/user").then(function(response){
-        if(response.data !== true){
-          console.log("NOT LOGGED IN!");
-          $location.path("/login");
-        } else {
-          console.log("LOGGED IN! ", response.data);
-          $http.get("/user/name").then(function(response){
-              console.log(response.data);
-          });
-        }
-    });
-
+    UserService.getUser();
 }]);
 
-myApp.controller("AnotherController", ["$scope", "$http", function($scope, $http){
+myApp.controller("AnotherController", ["$scope", "UserService", function($scope, UserService){
     console.log("AnotherController");
+
+
+    UserService.getUser();
+}]);
+
+myApp.factory("UserService", ["$http", "$location", function($http, $location){
+    var user;
+    var userLoggedIn = false;
+
+
+
+    var getUser = function() {
+      if(!userLoggedIn){
+        $http.get("/user/name").then(function(response){
+          console.log(response);
+            if(response.data === undefined){
+              console.log("NOT LOGGED IN!");
+              $location.path("/login");
+            } else {
+              user = response.data;
+              userLoggedIn = true;
+              console.log(user);
+
+            }
+        });
+      } else {
+      }
+    };
+
+    return {
+        user : user,
+        getUser : getUser
+    };
 }]);
